@@ -1,0 +1,262 @@
+.MiTabla {
+  width: 100%;
+}
+
+table.dataTable tbody td {
+  font-size: 1.8dvh; /* Tamaño de letra para las celdas */
+}
+
+table.dataTable thead th {
+  /* Establecemos el color sw fondo de la cabecera de la tabla*/
+  background-color: orange;
+  color: black; /* Establecemos el color del texto en negro*/
+}
+
+/* Definición de las clases de estilos para las animaciones */
+.trash-icon {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  font-size: 2rem;
+  opacity: 0.5;
+}
+
+.deleted-row {
+  animation: fadeOutAndMove 2s ease-in-out;
+}
+
+@keyframes fadeOutAndMove {
+  0% {
+    opacity: 1;
+    transform: translateX(0) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(100px) translateY(100px) scale(0.5);
+  }
+}
+
+.trash-effect {
+  animation: trashBump 0.5s ease-in-out;
+}
+
+@keyframes trashBump {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Nuevas animaciones para agregar registros */
+.new-row {
+  /* animation: slideInAndFade 0.8s ease-out; */
+  animation: slideInAndFade 1.5s ease-out;
+}
+
+@keyframes slideInAndFade {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px) scale(0.8);
+    background-color: #d4edda;
+  }
+  70% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    background-color: #d4edda;
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+/* Animación para actualización */
+.update-flash {
+  animation: updateFlash 1.5s ease-in-out;
+  position: relative;
+}
+
+@keyframes updateFlash {
+  0% {
+    background-color: #ffffff;
+    transform: scale(1);
+  }
+  25% {
+    background-color: #fff3cd;
+    transform: scale(1.02);
+  }
+  50% {
+    background-color: #ffeeba;
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 193, 7, 0.5);
+  }
+  75% {
+    background-color: #fff3cd;
+    transform: scale(1.02);
+  }
+  100% {
+    background-color: #ffffff;
+    transform: scale(1);
+  }
+}
+
+/* Efecto de brillo para la actualización */
+.update-flash::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(255, 255, 255, 0.8),
+    transparent
+  );
+  animation: shine 1.5s ease-in-out;
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-100%) translateY(-100%);
+  }
+  50% {
+    transform: translateX(0%) translateY(0%);
+  }
+  100% {
+    transform: translateX(100%) translateY(100%);
+  }
+}
+
+tr.highlight {
+  background-color: #e6ffe6 !important;
+  transition: background-color 2s ease;
+}
+
+/* Estilo para el botón flotante de agregar */
+.add-button {
+  position: fixed;
+  bottom: 20px;
+  right: 80px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #28a745;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s;
+}
+
+.add-button:hover {
+  transform: scale(1.1);
+}
+
+/* Animación para eliminación */
+.fade-out {
+  animation: fadeOut 1s ease-out forwards;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+    background-color: #ffe6e6;
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.9);
+    background-color: #ffcccc;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0);
+    background-color: #ff9999;
+  }
+}
+
+/* Animación de transición de página */
+
+@keyframes pageTransition {
+  0% {
+    opacity: 0;
+    transform: translateY(50px) scale(0.9);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateY(25px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.pagination-animation {
+  animation: pageTransition 0.6s ease-out;
+}
+
+/* Efecto de transición suave para toda la tabla */
+#productTable {
+  transition: all 1.3s ease;
+}
+
+/* Estilos para los botones de paginación */
+.dataTables_paginate .pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.dataTables_paginate .pagination .page-item {
+  margin: 0 5px;
+  transition: all 0.3s ease;
+}
+
+.dataTables_paginate .pagination .page-item:hover {
+  transform: scale(1.1);
+}
+
+.dataTables_paginate .pagination .page-item.active .page-link {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: white;
+}
+
+/* Efecto de carga */
+.dataTables_processing {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 60px;
+  margin-left: -50%;
+  margin-top: -25px;
+  padding: 20px;
+  background-color: rgba(0, 123, 255, 0.1);
+  border: 1px solid #007bff;
+  border-radius: 5px;
+  text-align: center;
+  z-index: 1;
+  animation: processingPulse 1.5s infinite;
+}
+
+@keyframes processingPulse {
+  0%,
+  100% {
+    background-color: rgba(0, 123, 255, 0.1);
+  }
+  50% {
+    background-color: rgba(0, 123, 255, 0.3);
+  }
+}
