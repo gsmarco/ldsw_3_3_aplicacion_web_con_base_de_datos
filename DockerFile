@@ -1,0 +1,14 @@
+# Imagen oficial de PHP con Apache
+FROM php:8.2-apache
+
+# Habilitar extensiones si usas MySQL
+RUN docker-php-ext-install mysqli
+
+# Copiar los archivos del proyecto al directorio web de Apache
+COPY . /var/www/html/
+
+# Dar permisos a los archivos
+RUN chown -R www-data:www-data /var/www/html
+
+# Puerto que se va a usar
+EXPOSE 80
