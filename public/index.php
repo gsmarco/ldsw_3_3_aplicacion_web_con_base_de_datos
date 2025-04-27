@@ -12,47 +12,52 @@ if (isset($_SESSION['usuario_email'])) {
 // Verificamos si se esta utilizando el método REQUEST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   // Conectar a la base de datos
-  $servername = "localhost";
-  $dbname = "catalogo";
-  $username = "root";
-  $password = "Olga0322";
+  // Parámetros de conexión
+  $host = 'localhost';
+  $db   = 'catalogo';
+  $user = 'gsmarco';
+  $pass = 'Olga0322';
+  $port = '5432';
 
-  $conn = new mysqli($servername, $username, $password, $dbname);
+  try {
+    // Crear conexión PDO
+    $dsn = "pgsql:host=$host;port=$port;dbname=$db;";
+    $pdo = new PDO($dsn, $user, $pass, [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+    ]);
 
-  // Verificar conexión
-  if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
-  }
+    // Obtener datos del formulario: email y password
+    $email = $_POST['email'] ?? '';
+    $inputPassword = $_POST['password'] ?? '';
 
-  // Obtener datos del formulario: email y password
-  $email = $_POST['email'] ?? '';
-  $inputPassword = $_POST['password'] ?? '';
+    // Modificar la consulta para obtener todos los datos necesarios del usuario
+    $stmt = $pdo->prepare("SELECT id, email, password, nombre FROM usuarios WHERE email = :email");
 
-  // Modificar la consulta para obtener todos los datos necesarios del usuario
-  $stmt = $conn->prepare("SELECT id, email, password, nombre FROM usuarios WHERE email = ?");
-  $stmt->bind_param("s", $email);
-  $stmt->execute();
-  $result = $stmt->get_result();
+    // Ejecutar consulta con parámetro
+    $stmt->execute(['email' => $email]);
 
-  // Si el resultado es > 0, se encontro el usuario en la base de datos
-  if ($result->num_rows > 0) {
-    $usuario = $result->fetch_assoc();
-
-    // Verificar la contraseña obtenida de la base d datos contra la recibida mediante POST
-    if ($inputPassword === $usuario['password']) {
-      $_SESSION['usuario_email'] = $usuario['email'];
-      header('Location: productos.php'); // Redirecciona al usuario a la página productos.php
-      exit();
-    } else {
-      $error = "Contraseña incorrecta"; // Error en la contraseña
+    // Obtener un solo registro
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($row) {
+        $password = $row['password'];
+        // Verificar la contraseña obtenida de la base d datos contra la recibida mediante POST
+        if ($inputPassword === $password) {
+          $_SESSION['usuario_email'] = $email;
+          header('Location: productos.php'); // Redirecciona al usuario a la página productos.php
+          exit();
+        } else {
+          $error = "Contraseña incorrecta"; // Error en la contraseña
+        }
+      } else {
+        echo "Usuario no encontrado.";
     }
-  } else {
-    $error = "Usuario no encontrado"; // Error en el usuario
-  }
 
-  // se cierra la conexión
-  $stmt->close();
-  $conn->close();
+    // se cierra la conexión
+    $stmt->close();
+    $conn->close();
+  } catch (PDOException $e) {
+    echo "Error: " . $e->getMessage();
+  }
 }
 ?>
 

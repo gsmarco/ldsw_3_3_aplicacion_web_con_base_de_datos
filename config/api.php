@@ -1,19 +1,22 @@
 <?php
-// Parametros de conexión a la base de datos
+// Parámetros de conexión
 $host = 'localhost';
-$dbname = 'catalogo';
-$username = 'root';
-$password = 'Olga0322';
+$db   = 'catalogo';
+$user = 'gsmarco';
+$pass = 'Olga0322';
+$port = '5432';
 
-// Conexión a la base de datos
 try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    echo "Connection failed: " . $e->getMessage();
-}
+    // Crear conexión PDO
+    $dsn = "pgsql:host=$host;port=$port;dbname=$db;";
+    $pdo = new PDO($dsn, $user, $pass, [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+    ]);
 
-$pdo->exec("set names utf8"); // Establecemos la codificación UTF8 de la base de datos 
+} catch (PDOException $e) {
+    echo "Error: " . $e->getMessage();
+    return;
+}
 
 // Procedimientos de acceso y manipulación de la tabla productos
 $action = $_GET['action'] ?? '';
