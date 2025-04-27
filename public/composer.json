@@ -1,0 +1,8 @@
+{
+    "name": "gsmarco/ldsw_3_3_aplicacion_web_con_base_de_datos",
+    "description": "Sitio web en PHP, Bootstrap y PostgreSQL para Render",
+    "require": {
+        "ext-pdo": "*",
+        "ext-pgsql": "*"
+    }
+}

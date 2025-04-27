@@ -5,7 +5,7 @@ ini_set('display_errors', 1);
 
 // Validar si existe una sesión
 if (!isset($_SESSION['usuario_email'])) {
-  header('Location: login.php'); // No existe, redireccion al formulario de login
+  header('Location: index.php'); // No existe, redireccion al formulario de login
   exit();
 }
 ?>
@@ -30,7 +30,7 @@ if (!isset($_SESSION['usuario_email'])) {
   <!-- SweetAlert2 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
 
-  <link href="style.css" rel="stylesheet" />
+  <link href="css/style.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -158,7 +158,7 @@ if (!isset($_SESSION['usuario_email'])) {
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-  <script src="script.js"></script>
+  <script src="js/script.js"></script>
 </body>
 
 </html>
