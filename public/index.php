@@ -19,6 +19,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $pass = 'Olga0322';
   $port = '5432';
 
+  $host = 'dpg-d076lls9c44c739o31lg-a.frankfurt-postgres.render.com';
+  $db   = 'catalogo_t804';
+  $user = 'gsmarco';
+  $pass = 'mm0XqtKjmX3TNEVdujzXZFZQfHP5hNDe';
+  $port = '5432';
+  
   try {
     // Crear conexión PDO
     $dsn = "pgsql:host=$host;port=$port;dbname=$db;";
