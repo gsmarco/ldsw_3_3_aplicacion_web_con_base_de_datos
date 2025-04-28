@@ -1,21 +1,21 @@
-# Usa una imagen oficial de PHP con Apache
 FROM php:8.2-apache
 
-# Instala extensiones necesarias (como PostgreSQL)
-RUN docker-php-ext-install pdo pdo_pgsql pgsql
+# Instalar dependencias del sistema antes de compilar extensiones
+RUN apt-get update && apt-get install -y \
+    libpq-dev \
+    && docker-php-ext-install pdo pdo_pgsql pgsql
 
-# Copia tu código fuente al directorio que Apache usa
+# Copiar tu aplicación PHP
 COPY . /var/www/html/
 
-# Da permisos
+# Permisos correctos
 RUN chown -R www-data:www-data /var/www/html
 
-# Habilita el módulo de reescritura de Apache si usas URLs bonitas
+# Habilitar mod_rewrite si es necesario
 RUN a2enmod rewrite
 
 # Exponer el puerto 80
 EXPOSE 80
 
-# Iniciar Apache en primer plano
+# Comando para mantener Apache en primer plano
 CMD ["apache2-foreground"]
-
