@@ -1,20 +1,9 @@
 <?php
-// Parámetros de conexión
-$host = 'localhost';
-$db   = 'catalogo';
-$user = 'gsmarco';
-$pass = 'Olga0322';
-$port = '5432';
 
-$host = 'dpg-d076lls9c44c739o31lg-a.frankfurt-postgres.render.com';
-$db   = 'catalogo_t804';
-$user = 'gsmarco';
-$pass = 'mm0XqtKjmX3TNEVdujzXZFZQfHP5hNDe';
-$port = '5432';
+include 'string_conn.php';
 
 try {
     // Crear conexión PDO
-    $dsn = "pgsql:host=$host;port=$port;dbname=$db;";
     $pdo = new PDO($dsn, $user, $pass, [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
     ]);
